@@ -1,12 +1,13 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const { ObjectId } = Schema;
 const TeacherSchema = new Schema({
     email:{
         type: String,
         required: true
     },
     questions:[{
-        type:Schema.Types.ObjectId,
+        type: ObjectId,
         ref: 'Question'
     }]
 });

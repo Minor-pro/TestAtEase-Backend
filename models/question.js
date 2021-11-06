@@ -6,13 +6,10 @@ const QuestionSchema = new Schema({
         required: true
     },
     images:{
-        type:{
-            data: Buffer,
-            contentType: String
-        }
+        type: String
     },
     id:{
-        type: Number,
+        type: String,
         required: true
     },
     topicTags:{
