@@ -3,7 +3,6 @@ const Schema = mongoose.Schema;
 const QuestionSchema = new Schema({
     text:{
         type: String,
-        required: true
     },
     images:{
         type: String
@@ -14,6 +13,9 @@ const QuestionSchema = new Schema({
     },
     topicTags:{
         type:Array,
+    },
+    recognizedWords:{
+        type:Array
     }
-});
+},{ timestamps: true });
 module.exports = Item = mongoose.model('question', QuestionSchema);
