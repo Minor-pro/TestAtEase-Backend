@@ -2,10 +2,10 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const QuestionSchema = new Schema({
     text:{
-        type: String,
+        type: Array,
     },
     images:{
-        type: String
+        type: Array
     },
     id:{
         type: String,

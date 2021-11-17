@@ -25,15 +25,27 @@ const addQuestion = async (req, res) => {
         res.status(400).send('Create Question Failed')
     }
 };
+const updateQuestion = async (req, res) => {
+    try{
+        const { questionText, qid, questionImage, questionTopicTags,recognizedWords } = req.body;
+        //const question=await new Question({text:questionText, images:questionImage, id:questionId, topicTags:questionTopicTags, recognizedWords:recognizedWords}).save();
+        const question=await Question.findOneAndReplace({id:qid},{text:questionText, images:questionImage, id:qid, topicTags:questionTopicTags, recognizedWords:recognizedWords}).exec();
+        res.status(200).send(question)
+    }catch(err){
+        res.status(400).send('Update Question Failed')
+    }
+}
 const getQuestions = async (req,res)=>{
     const teacherEmail=req.params.email;
     try{
         const questionIds= (await Teacher.findOne({email:teacherEmail}))['questions']
         const questions=await Question.find({ _id: {$in : questionIds}})
+                                    .sort({'updatedAt':-1})
+                                    .exec()
         res.status(200).send(questions)
     }
     catch(err){
         res.status(400).send('List All Questions Failed')
     }
 }
-module.exports={addQuestion, getQuestions}
+module.exports={addQuestion, getQuestions,updateQuestion}
