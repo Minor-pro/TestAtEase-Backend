@@ -48,4 +48,19 @@ const getQuestions = async (req,res)=>{
         res.status(400).send('List All Questions Failed')
     }
 }
-module.exports={addQuestion, getQuestions,updateQuestion}
+const getSearchedQuestions = async (req,res)=>{
+    const {teacher,query}=req.body;
+    console.log(teacher,query)
+    const regexQuery=new RegExp("^" + query.toLowerCase(), "i")
+    try{
+        const questionIds= (await Teacher.findOne({email:teacher.email}))['questions']
+        const searchedQuestions=await Question.find({ _id: {$in : questionIds},topicTags:{$in:regexQuery}})
+                                    .sort({'updatedAt':-1})
+                                    .exec();
+        res.status(200).send(searchedQuestions)
+    }
+    catch(err){
+        res.status(400).send('Search Questions Failed')
+    }
+}
+module.exports={addQuestion, getQuestions,updateQuestion,getSearchedQuestions}
