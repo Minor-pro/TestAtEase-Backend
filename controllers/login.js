@@ -3,7 +3,7 @@ const Teacher=require("../models/teacher");
 const login = async (req, res,next) => {
     const { email, name } = req.body;
     
-    const user=await Teacher.findOneAndUpdate(
+    const user=await Teacher.findOne(
         {email},
     ); 
 
